@@ -1,0 +1,177 @@
+@import 'reset.css';
+
+.header {
+  color: white;
+  height: 48px;
+  padding: 12px;
+  background-color: #4582ec;
+}
+
+main {
+  height: calc(100% - 96px);
+  padding: 12px;
+  overflow-y: scroll;
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+
+.footer {
+  height: 48px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.search_container {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+
+.search_title {
+  color: #343a40;
+  font-size: 32px;
+  font-weight: bold;
+  padding-top: 12px;
+  padding: 4px;
+  margin: 4px;
+}
+
+.search_subtitle {
+  color: #8f979e;
+  padding: 4px;
+  margin: 4px;
+}
+
+.search_input {
+  border: 1px solid #e5e5e5;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+.profile_container {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  width: 100%;
+}
+.profile_box1 {
+  width: 30%;
+  padding: 12px;
+}
+.profile_box2 {
+  width: 70%;
+  padding: 12px;
+}
+
+.profile_img {
+  width: 100%;
+}
+.profile_btn {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+}
+
+.profile_btn button {
+  width: 100%;
+  background-color: #4582ec;
+  height: 32px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.profile_tag {
+  padding-bottom: 16px;
+}
+
+.profile_tag button {
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.repos,
+.stars {
+  background-color: #4582ec;
+  color: white;
+}
+.gists,
+.watchers {
+  background-color: #adb5bd;
+  color: white;
+}
+.followers,
+.forks {
+  background-color: #01b875;
+  color: white;
+}
+.following {
+  background-color: #19a1b8;
+  color: white;
+}
+
+.profile_content table,
+td {
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+  padding: 12px;
+  width: 100%;
+}
+
+.repository_title {
+  color: #343a40;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.repository {
+  border: 1px solid #e5e5e5;
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  margin-top: 4px;
+  border-radius: 4px;
+}
+
+.repository_name {
+  width: 50%;
+}
+
+.repository_tag {
+  width: 50%;
+}
+
+a {
+  text-decoration: none;
+  color: #4582ec;
+}
+
+.repository_tag button {
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
