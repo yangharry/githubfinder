@@ -9,4 +9,5 @@ body {
   max-width: 1080px;
   margin: auto;
   height: 100%;
+  min-width: 450px;
 }

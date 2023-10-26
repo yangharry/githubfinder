@@ -8,7 +8,7 @@
 }
 
 main {
-  height: calc(100% - 96px);
+  height: calc(100% - 96px - 163px);
   padding: 12px;
   overflow-y: scroll;
 }
@@ -26,11 +26,14 @@ main::-webkit-scrollbar {
   font-size: 12px;
 }
 
+.search {
+  padding: 12px;
+}
+
 .search_container {
   border: 1px solid #e5e5e5;
   border-radius: 4px;
   padding: 12px;
-  margin-bottom: 24px;
 }
 
 .search_title {
@@ -174,4 +177,54 @@ a {
   padding-right: 12px;
   font-size: 12px;
   cursor: pointer;
+}
+
+.event_title {
+  color: #343a40;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.event_table {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  width: 100%;
+  font-size: 10px;
+  justify-content: center;
+}
+
+.date {
+  border: none;
+  text-align: start;
+}
+
+.event_table td {
+  height: 12px;
+  width: 12px;
+  padding: 0;
+  border-radius: 2px;
+}
+
+.event_table table {
+  border-spacing: 4px;
+}
+
+.no_commit {
+  background-color: #ebedf0;
+}
+
+.less_three {
+  background-color: #9be9a8;
+}
+.less_six {
+  background-color: #40c463;
+}
+.less_nine {
+  background-color: #30a14e;
+}
+.more_nine {
+  background-color: #216e39;
 }
