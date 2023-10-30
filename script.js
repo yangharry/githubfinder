@@ -58,31 +58,7 @@ async function splitedAllDay(days) {
   return answer;
 }
 
-async function listUp(user) {
-  // https://api.github.com/users/yangharry/events 커밋내역
-
-  // profile 데이터
-  const data = await fetch(`https://api.github.com/users/${user}`).then((res) => res.json());
-  const gist_url = data.html_url.replace('github', 'gist.github');
-
-  // events 데이터
-  const eventsData = await eventsLoader(user);
-  const dates = [];
-  for (let i = 0; i < eventsData.length; i++) {
-    dates.push(eventsData[i].created_at);
-  }
-
-  dates.sort((a, b) => {
-    return new Date(a) - new Date(b);
-  });
-
-  const firstDay = new Date(dates[0]);
-
-  const startDay = new Date(firstDay.setDate(firstDay.getDate() - firstDay.getDay()));
-  const endDay = new Date(dates[dates.length - 1]);
-
-  const dateInterval = Math.ceil((endDay.getTime() - startDay.getTime()) / 1000 / 3600 / 24);
-
+async function setEvents(dates) {
   const contributions = {};
 
   for (let i = 0; i < dates.length; i++) {
@@ -100,11 +76,39 @@ async function listUp(user) {
     }
   }
 
+  return contributions;
+}
+
+async function listUp(user) {
+  // https://api.github.com/users/yangharry/events 커밋내역
+
+  // profile 데이터
+  const data = await fetch(`https://api.github.com/users/${user}`).then((res) => res.json());
+  const gist_url = data.html_url.replace('github', 'gist.github');
+
+  // events 데이터
+  const eventsData = await eventsLoader(user);
+
+  const dates = [];
+  for (let i = 0; i < eventsData.length; i++) {
+    dates.push(eventsData[i].created_at);
+  }
+
+  dates.sort((a, b) => {
+    return new Date(a) - new Date(b);
+  });
+
+  const startDay = new Date(dates[0]);
+  const endDay = new Date(dates[dates.length - 1]);
+
+  const dateInterval = Math.ceil((endDay.getTime() - startDay.getTime()) / 1000 / 3600 / 24);
+
+  const contributions = await setEvents(dates);
+
   const allDays = [];
 
   for (let i = 0; i <= dateInterval; i++) {
-    let firstDay = new Date(dates[0]);
-    let startDay = new Date(firstDay.setDate(firstDay.getDate() - firstDay.getDay()));
+    let startDay = new Date(dates[0]);
     const day = new Date(startDay.setDate(startDay.getDate() + i)).toISOString();
     allDays.push(day);
   }
@@ -214,6 +218,7 @@ async function listUp(user) {
 
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
   for (let i = 0; i < splitedAllDays.length; i++) {
     const month = document.createElement('td');
     const monthName = monthNames[new Date(splitedAllDays[i][0]).getMonth()];
@@ -241,6 +246,7 @@ async function listUp(user) {
       } else {
         day.classList.add('no_commit');
       }
+
       document.querySelector(`#${dayName}`).append(day);
     }
   }
