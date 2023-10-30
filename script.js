@@ -58,27 +58,6 @@ async function splitedAllDay(days) {
   return answer;
 }
 
-async function setEvents(dates) {
-  const contributions = {};
-
-  for (let i = 0; i < dates.length; i++) {
-    let month = new Date(dates[i]).getMonth() + 1;
-    let date = new Date(dates[i]).getDate();
-    if (!contributions[month]) {
-      contributions[month] = {};
-      contributions[month][date] = 1;
-    } else {
-      if (!contributions[month][date]) {
-        contributions[month][date] = 1;
-      } else {
-        contributions[month][date]++;
-      }
-    }
-  }
-
-  return contributions;
-}
-
 async function listUp(user) {
   // https://api.github.com/users/yangharry/events 커밋내역
 
@@ -98,17 +77,34 @@ async function listUp(user) {
     return new Date(a) - new Date(b);
   });
 
-  const startDay = new Date(dates[0]);
+  const firstDay = new Date(dates[0]);
+  const startDay = new Date(firstDay.setDate(firstDay.getDate() - firstDay.getDay()));
   const endDay = new Date(dates[dates.length - 1]);
 
   const dateInterval = Math.ceil((endDay.getTime() - startDay.getTime()) / 1000 / 3600 / 24);
 
-  const contributions = await setEvents(dates);
+  const contributions = {};
+
+  for (let i = 0; i < dates.length; i++) {
+    let month = new Date(dates[i]).getMonth() + 1;
+    let date = new Date(dates[i]).getDate();
+    if (!contributions[month]) {
+      contributions[month] = {};
+      contributions[month][date] = 1;
+    } else {
+      if (!contributions[month][date]) {
+        contributions[month][date] = 1;
+      } else {
+        contributions[month][date]++;
+      }
+    }
+  }
 
   const allDays = [];
 
   for (let i = 0; i <= dateInterval; i++) {
-    let startDay = new Date(dates[0]);
+    let firstDay = new Date(dates[0]);
+    let startDay = new Date(firstDay.setDate(firstDay.getDate() - firstDay.getDay()));
     const day = new Date(startDay.setDate(startDay.getDate() + i)).toISOString();
     allDays.push(day);
   }
@@ -235,14 +231,18 @@ async function listUp(user) {
       const dayName = dayNames[new Date(splitedAllDays[i][j]).getDay()];
       const mon = new Date(splitedAllDays[i][j]).getMonth() + 1;
       const date = new Date(splitedAllDays[i][j]).getDate();
-      if (contributions[mon][date] >= 9) {
-        day.classList.add('more_nine');
-      } else if (contributions[mon][date] >= 6) {
-        day.classList.add('less_nine');
-      } else if (contributions[mon][date] >= 3) {
-        day.classList.add('less_six');
-      } else if (contributions[mon][date] >= 1) {
-        day.classList.add('less_three');
+      if (contributions[mon]) {
+        if (contributions[mon][date] >= 9) {
+          day.classList.add('more_nine');
+        } else if (contributions[mon][date] >= 6) {
+          day.classList.add('less_nine');
+        } else if (contributions[mon][date] >= 3) {
+          day.classList.add('less_six');
+        } else if (contributions[mon][date] >= 1) {
+          day.classList.add('less_three');
+        } else {
+          day.classList.add('no_commit');
+        }
       } else {
         day.classList.add('no_commit');
       }
